@@ -1,6 +1,6 @@
 # Roll Dice
 
-A simple app that lets you roll a pair of dice. The main goal of the app is to work with props, defaultProps, state, and simple click events in React.
+A simple app that lets you roll a pair of dice. The main goal of the app is to work with props, defaultProps, state, and simple click events in React. In the next step I added hooks.
 
 ## Getting Started with Create React App
 

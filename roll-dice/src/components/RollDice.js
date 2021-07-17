@@ -1,49 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Die from './Die';
+import { createRandomDice } from './utils';
 
-class RollDice extends Component {
-  static defaultProps = {
-    sides: ['one', 'two', 'three', 'four', 'five', 'six'],
+const RollDice = () => {
+  const [dice, setDice] = useState([]);
+  const [isRolling, setRolling] = useState(false);
+
+  useEffect(() => {
+    setDice(createRandomDice());
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRolling(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [isRolling]);
+
+  const roll = () => {
+    setRolling(true);
+    setDice(createRandomDice());
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { die1: 'one', die2: 'one', isRolling: false };
-    this.roll = this.roll.bind(this);
-  }
-
-  roll() {
-    const randomDie1 =
-      this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
-    const randomDie2 =
-      this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
-
-    this.setState({
-      die1: randomDie1,
-      die2: randomDie2,
-      isRolling: true,
-    });
-
-    setTimeout(() => {
-      this.setState({
-        isRolling: false,
-      });
-    }, 1000);
-  }
-
-  render() {
-    return (
-      <div className="RollDice">
-        <div className="RollDice-container">
-          <Die face={this.state.die1} isRolling={this.state.isRolling} />
-          <Die face={this.state.die2} isRolling={this.state.isRolling} />
-        </div>
-        <button onClick={this.roll} disabled={this.state.isRolling}>
-          {this.state.isRolling ? 'Rolling...' : 'Roll dice!'}
-        </button>
+  return (
+    <div className="RollDice">
+      <div className="RollDice-container">
+        {dice.map((die, index) => (
+          <Die number={die} key={index} isRolling={isRolling} />
+        ))}
       </div>
-    );
-  }
-}
+      <button onClick={roll} disabled={isRolling}>
+        {isRolling ? 'Rolling...' : 'ROLL dice!'}
+      </button>
+    </div>
+  );
+};
 
 export default RollDice;

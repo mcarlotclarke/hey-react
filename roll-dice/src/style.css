@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* RollDice styles */
+.RollDice {
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh;
+}
+
+.RollDice-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.RollDice button {
+  align-self: center;
+  width: 15em;
+  padding: 1.5em;
+  border: 0px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(133, 31, 133);
+  margin-top: 3em;
+}
+
+.RollDice button:hover {
+  background-color: rgb(180, 130, 238);
+  cursor: pointer;
+}
+
+/* Die styles */
+.Die {
+  font-size: 14em;
+  padding: 0.25em;
+  color: rgb(33, 190, 196);
+}
+
+.shaking {
+  animation-name: wobble;
+  animation-duration: 1s;
+}
+
+@keyframes wobble {
+  0% {
+    transform: translateX(0%);
+  }
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Die from './Die';
-import '../RollDice.css';
 
 class RollDice extends Component {
   static defaultProps = {
@@ -14,14 +13,14 @@ class RollDice extends Component {
   }
 
   roll() {
-    const newDie1 =
+    const randomDie1 =
       this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
-    const newDie2 =
+    const randomDie2 =
       this.props.sides[Math.floor(Math.random() * this.props.sides.length)];
 
     this.setState({
-      die1: newDie1,
-      die2: newDie2,
+      die1: randomDie1,
+      die2: randomDie2,
       isRolling: true,
     });
 

@@ -3,10 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
+    "prettier": "^2.3.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.0.5"
   },
+  "husky": {
+    "hooks": {
+     "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+   "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+     "prettier --write",
+     "git add"
+    ]
+ },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

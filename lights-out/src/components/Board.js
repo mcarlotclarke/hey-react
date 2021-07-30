@@ -29,32 +29,48 @@ import '../style/Board.css';
  **/
 
 class Board extends Component {
+  static defaultProps = {
+    nRows: 5,
+    nCols: 5,
+    chanceLightStartsOn: 0.25,
+  };
   constructor(props) {
     super(props);
-
-    // TODO: set initial state
+    this.state = {
+      hasWon: false,
+      board: this.createBoard(),
+    };
   }
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
 
   createBoard() {
-    let board = [];
-    // TODO: create array-of-arrays of true/false values
+    const board = [];
+
+    for (let x = 0; x < this.props.nRows; x++) {
+      const row = [];
+      for (let y = 0; y < this.props.nCols; y++) {
+        // decide if on or off, true or false - if less than .25 is true
+        row.push(Math.random() < this.props.chanceLightStartsOn);
+      }
+      board.push(row);
+    }
+
     return board;
   }
 
   /** handle changing a cell: update board & determine if winner */
 
   flipCellsAround(coord) {
-    let { ncols, nrows } = this.props;
+    let { nRows, nCols } = this.props;
     let board = this.state.board;
-    let [y, x] = coord.split('-').map(Number);
+    let [x, y] = coord.split('-').map(Number);
 
-    function flipCell(y, x) {
+    function flipCell(x, y) {
       // if this coord is actually on board, flip it
 
-      if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
-        board[y][x] = !board[y][x];
+      if (y >= 0 && y < nCols && x >= 0 && x < nRows) {
+        board[x][y] = !board[x][y];
       }
     }
 
@@ -63,17 +79,29 @@ class Board extends Component {
     // win when every cell is turned off
     // TODO: determine is the game has been won
 
-    this.setState({ board, hasWon });
+    // this.setState({ board, hasWon });
   }
 
   /** Render game board or winning message. */
 
   render() {
     // if the game is won, just show a winning msg & render nothing else
-    return <div>TESTING!</div>;
-    // TODO
-    // make table board
-    // TODO
+    const tableBoard = [];
+
+    for (let x = 0; x < this.props.nRows; x++) {
+      const row = [];
+      for (let y = 0; y < this.props.nCols; y++) {
+        row.push(<Cell isLit={this.state.board[x][y]} />);
+      }
+
+      tableBoard.push(<tr>{row}</tr>);
+    }
+
+    return (
+      <table className="Board">
+        <tbody>{tableBoard}</tbody>
+      </table>
+    );
   }
 }
 

@@ -2,32 +2,6 @@ import React, { Component } from 'react';
 import Cell from './Cell';
 import '../style/Board.css';
 
-/** Game board of Lights out.
- *
- * Properties:
- *
- * - nrows: number of rows of board
- * - ncols: number of cols of board
- * - chanceLightStartsOn: float, chance any cell is lit at start of game
- *
- * State:
- *
- * - hasWon: boolean, true when board is all off
- * - board: array-of-arrays of true/false
- *
- *    For this board:
- *       .  .  .
- *       O  O  .     (where . is off, and O is on)
- *       .  .  .
- *
- *    This would be: [[f, f, f], [t, t, f], [f, f, f]]
- *
- *  This should render an HTML table of individual <Cell /> components.
- *
- *  This doesn't handle any clicks --- clicks are on individual cells
- *
- **/
-
 class Board extends Component {
   static defaultProps = {
     nRows: 5,
@@ -85,17 +59,8 @@ class Board extends Component {
     this.setState({ board, hasWon });
   }
 
-  /** Render game board or winning message. */
-  render() {
-    // if the game is won, just show a winning msg & render nothing else
-    if (this.state.hasWon)
-      return (
-        <div className="winner">
-          <span className="neon-orange">YOU</span>
-          <span className="neon-blue">WIN!</span>
-        </div>
-      );
-
+  /** render game board */
+  makeTable() {
     // create tableBoard variable representing the rows and cells to generate
     const tableBoard = [];
 
@@ -115,14 +80,31 @@ class Board extends Component {
     }
 
     return (
+      <table className="Board">
+        <tbody>{tableBoard}</tbody>
+      </table>
+    );
+  }
+
+  render() {
+    // if the game is won, just show a winning msg & render nothing else
+
+    return (
       <div>
-        <div className="Board-title">
-          <div className="neon-orange">Lights</div>
-          <div className="neon-blue">Out</div>
-        </div>
-        <table className="Board">
-          <tbody>{tableBoard}</tbody>
-        </table>
+        {this.state.hasWon ? (
+          <div className="winner">
+            <span className="neon-orange">YOU</span>
+            <span className="neon-blue">WIN!</span>
+          </div>
+        ) : (
+          <div>
+            <div className="Board-title">
+              <div className="neon-orange">Lights</div>
+              <div className="neon-blue">Out</div>
+            </div>
+            {this.makeTable()}
+          </div>
+        )}
       </div>
     );
   }

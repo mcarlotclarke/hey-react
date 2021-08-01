@@ -43,7 +43,6 @@ class Board extends Component {
   }
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
-
   createBoard() {
     const board = [];
 
@@ -60,7 +59,6 @@ class Board extends Component {
   }
 
   /** handle changing a cell: update board & determine if winner */
-
   flipCellsAround(coord) {
     let { nRows, nCols } = this.props;
     let board = this.state.board;
@@ -83,18 +81,19 @@ class Board extends Component {
   }
 
   /** Render game board or winning message. */
-
   render() {
     // if the game is won, just show a winning msg & render nothing else
+
+    // create tableBoard variable representing the rows and cells to generate
     const tableBoard = [];
 
     for (let x = 0; x < this.props.nRows; x++) {
       const row = [];
       for (let y = 0; y < this.props.nCols; y++) {
-        row.push(<Cell isLit={this.state.board[x][y]} />);
+        let coord = `${x}-${y}`;
+        row.push(<Cell key={coord} isLit={this.state.board[x][y]} />);
       }
-
-      tableBoard.push(<tr>{row}</tr>);
+      tableBoard.push(<tr key={x}>{row}</tr>);
     }
 
     return (

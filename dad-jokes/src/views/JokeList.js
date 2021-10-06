@@ -22,13 +22,24 @@ class JokeList extends Component {
       const response = await axios.get(API_URL, {
         headers: { Accept: 'application/json' },
       });
-      jokes.push(response.data.joke);
+      jokes.push({ id: response.data.id, joke: response.data.joke, votes: 0 });
     }
 
     this.setState({
       jokes: jokes,
     });
   }
+
+  handleVote = (id, delta) => {
+    const deepCopy = JSON.parse(JSON.stringify(this.state.jokes));
+    const deepCopyMap = deepCopy.map((joke) =>
+      joke.id === id ? { ...joke, votes: joke.votes + delta } : joke
+    );
+
+    this.setState({
+      jokes: deepCopyMap,
+    });
+  };
 
   render() {
     return (
@@ -45,9 +56,13 @@ class JokeList extends Component {
         </div>
         <div className="JokeList-jokes">
           {this.state.jokes.map((joke) => (
-            <ul>
-              <Joke joke={joke} />
-            </ul>
+            <Joke
+              key={joke.id}
+              joke={joke.joke}
+              votes={joke.votes}
+              upvote={() => this.handleVote(joke.id, 1)}
+              downvote={() => this.handleVote(joke.id, -1)}
+            />
           ))}
         </div>
       </div>
